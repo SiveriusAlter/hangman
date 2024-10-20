@@ -3,16 +3,24 @@ public class Game {
     public void Play(String randomWord) {
         CheckResult result;
         String inputWord;
-        do {
-            System.out.println("Введите слово или букву:\n");
-            inputWord = Input.InputWord();
+        Picture[] pictures = Picture.values();
+        for(int i = 0; i < pictures.length;) {
+            System.out.println("Введите букву или слово целиком:\n");
+            inputWord = Input.InputWord(randomWord.length());
             result = CheckWord(randomWord, inputWord);
-            System.out.printf("Результат: %s Рандомное слово: %s \n", result.getTitle(), randomWord);
+            if (result == CheckResult.WIN) {
+                Output.ResultOut(result, randomWord);
+                break;
+            }
+            else if (result == CheckResult.CONTAIN) Output.ResultOut(result, randomWord);
+            else {
+                Output.ResultOut(result, randomWord, pictures[i]);
+                i++;
+            }
         }
-        while (result != CheckResult.WIN);
     }
 
-    public CheckResult CheckWord(String randomWord, String inputWord) {
+    private CheckResult CheckWord(String randomWord, String inputWord) {
         if(randomWord.equals(inputWord)) return CheckResult.WIN;
         else if(randomWord.contains(inputWord)) return CheckResult.CONTAIN;
         else return CheckResult.MISTAKE;

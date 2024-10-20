@@ -10,11 +10,25 @@ public class Input {
     ArrayList<String> Dictionary = TakeADictionary();
     String RandomWord = TakeRndWord(Dictionary);
 
-    public static String InputWord() {
+    private static String InputConsole(){
         Scanner in = new Scanner(System.in);
         return in.nextLine().toLowerCase();
     }
-    
+
+    public static String InputWord() {
+        return InputConsole();
+    }
+
+    public static String InputWord(int wordLength) {
+        while (true) {
+            String word = InputConsole();
+            if (word.length() == 1 || word.length() == wordLength) return word;
+            else {
+                System.out.println("Введите букву или слово целиком!!");
+            }
+        }
+    }
+
     private static String DictPath() {
         return Paths.get("dictionary.txt").toAbsolutePath().toString();
     }
