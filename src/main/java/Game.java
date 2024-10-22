@@ -9,18 +9,19 @@ public class Game {
             System.out.println("Введите букву или слово целиком:\n");
             inputWord = Input.InputWord(randomWord.length());
             result = CheckWord(randomWord, inputWord);
-            if (result == CheckResult.WIN) {
-                Output.ResultOut(result, randomWord);
-                break;
-            }
+            if (result == CheckResult.WIN) Output.ResultOut(result, randomWord);
             else if (result == CheckResult.CONTAIN) {
                 hiddenWord = OpeningLetters(hiddenWord,randomWord,inputWord);
+                if (hiddenWord.equals(randomWord)) {
+                    result = CheckResult.WIN;
+                }
                 Output.ResultOut(result, hiddenWord);
             }
             else {
                 Output.ResultOut(result, hiddenWord, pictures[i]);
                 i++;
             }
+            if (result == CheckResult.WIN) break;
         }
     }
 
