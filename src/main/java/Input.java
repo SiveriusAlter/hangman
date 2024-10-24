@@ -1,56 +1,47 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Input {
-    ArrayList<String> Dictionary = TakeADictionary();
-    String RandomWord = TakeRndWord(Dictionary);
-
-    private static String InputConsole(){
+    private String InputConsole(){
         Scanner in = new Scanner(System.in);
         return in.nextLine().toLowerCase();
     }
 
-    public static String InputWord() {
-        return InputConsole();
-    }
-
-    public static String InputWord(int wordLength) {
+    public MenuOption InputOption() {
+        System.out.println("Хочешь сыграть в игру?\nДа или Нет: ");
         while (true) {
             String word = InputConsole();
-            if (word.length() == 1 || word.length() == wordLength) return word;
+            if (ValidateLetters(word)) return ValidateTF(word);
+            else {
+                System.out.println(MenuOption.ERROR.getTitle());
+            }
+        }
+    }
+
+
+    public String InputWord(int wordLength) {
+        System.out.println("Введите букву или слово целиком:\n");
+        while (true) {
+            String word = InputConsole();
+            if (ValidateLetters(word) && ValidLength(word, wordLength)) return word;
             else {
                 System.out.println("Введите букву или слово целиком!!");
             }
         }
     }
 
-    private static String DictPath() {
-        return Paths.get("dictionary.txt").toAbsolutePath().toString();
-    }
-    
-    private static ArrayList<String> TakeADictionary() {
-        ArrayList<String> wordsDict = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(DictPath())))
-        {
-            String word;
-            while ((word = br.readLine())!=null){
-                wordsDict.add(word);
-            }
-        }
-        catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return wordsDict;
+    public boolean ValidateLetters(String word) {
+        if(word.matches("[а-я]+")) return true;
+        else return false;
     }
 
-    private String TakeRndWord(ArrayList<String> Dictionary) {
-        Random random = new Random();
-        int randomNumber = random.nextInt(Dictionary.size());
-        return Dictionary.get(randomNumber);
+    public MenuOption ValidateTF(String word) {
+        if (word.equals(MenuOption.PLAY.getTitle().toLowerCase())) return MenuOption.PLAY;
+        else if (word.equals(MenuOption.EXIT.getTitle().toLowerCase())) return MenuOption.EXIT;
+        else return MenuOption.ERROR;
+    }
+
+    private boolean ValidLength(String word, int wordLength) {
+        if(word.length() == 1 || word.length() == wordLength) return true;
+        else return false;
     }
 }

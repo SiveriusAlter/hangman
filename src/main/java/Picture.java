@@ -52,4 +52,5 @@ public enum Picture {
     public String getTitle() {
         return title;
     }
+
 }

@@ -1,27 +1,28 @@
 public class Game {
 
-    public void Play(String randomWord) {
-        CheckResult result;
-        String inputWord;
-        Picture[] pictures = Picture.values();
+    public void Play(String randomWord, Input input) {
         String hiddenWord = HidingWord(randomWord);
-        for(int i = 0; i < pictures.length;) {
-            System.out.println("Введите букву или слово целиком:\n");
-            inputWord = Input.InputWord(randomWord.length());
-            result = CheckWord(randomWord, inputWord);
-            if (result == CheckResult.WIN) Output.ResultOut(result, randomWord);
+        for(int i = 0; i < Picture.values().length;) {
+            String inputWord = input.InputWord(randomWord.length());
+            CheckResult result = CheckWord(randomWord, inputWord);
+            if (result == CheckResult.WIN) {
+                Output.ResultOut(result, randomWord);
+                break;
+            }
             else if (result == CheckResult.CONTAIN) {
-                hiddenWord = OpeningLetters(hiddenWord,randomWord,inputWord);
+                hiddenWord = OpeningLetters(hiddenWord, randomWord, inputWord);
                 if (hiddenWord.equals(randomWord)) {
                     result = CheckResult.WIN;
+                    Output.ResultOut(result, randomWord);
+                    break;
                 }
                 Output.ResultOut(result, hiddenWord);
             }
             else {
-                Output.ResultOut(result, hiddenWord, pictures[i]);
+                if (i==Picture.values().length-1) Output.ResultOut(result, randomWord, i);
+                else Output.ResultOut(result, hiddenWord, i);
                 i++;
             }
-            if (result == CheckResult.WIN) break;
         }
     }
 
