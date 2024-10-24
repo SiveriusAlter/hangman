@@ -30,8 +30,7 @@ public class Input {
     }
 
     public boolean ValidateLetters(String word) {
-        if(word.matches("[а-я]+")) return true;
-        else return false;
+        return (word.matches("[а-я]+"));
     }
 
     public MenuOption ValidateTF(String word) {
@@ -41,7 +40,6 @@ public class Input {
     }
 
     private boolean ValidLength(String word, int wordLength) {
-        if(word.length() == 1 || word.length() == wordLength) return true;
-        else return false;
+        return (word.length() == 1 || word.length() == wordLength);
     }
 }
