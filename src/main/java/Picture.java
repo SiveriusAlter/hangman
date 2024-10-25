@@ -40,8 +40,7 @@ public enum Picture {
             "|    /|\\\n" +
             "|    / \\\n" +
             "|\n" +
-            "|________\n" +
-            "Ты проиграл!!\n");
+            "|________\n");
 
     private final String title;
 
