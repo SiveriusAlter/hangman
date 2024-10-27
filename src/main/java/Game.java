@@ -11,15 +11,12 @@ public class Game {
 
     public void Play() {
         String hiddenWord = HidingWord();
-        System.out.printf("\u001b[35mМы загадали слово, но вы увидите звезды!\nВот они: %s\n Длина слова: %d\n\u001b[0m",
-                hiddenWord,
-                randomWord.length());
+        Output.PrintStartGame(hiddenWord, randomWord);
         for(int i = 0; i < roundCount; i++) {
             Round round = new Round(randomWord, hiddenWord, i);
             if(round.PlayRound() == Result.WIN) break;
             else if (i == roundCount-1) {
-                System.out.printf("\u001b[01;31mПоздравляю! Вы проиграли!\nСлово было: %s\n\n\u001b[0m",
-                        randomWord.toUpperCase());
+                Output.PrintLoseGame(randomWord);
             } else {
                 hiddenWord = round.getHiddenWord();
             }
@@ -61,10 +58,10 @@ public class Game {
                     hiddenWord = OpeningLetters();
                     if (hiddenWord.equals(randomWord)) result = Result.WIN;
                 } else if (result == Result.MISTAKE) {
-                    Output.ResultOut(result, hiddenWord, roundNumber);
+                    Output.PrintResult(result, hiddenWord, roundNumber);
                     return result;
                 }
-                Output.ResultOut(result, hiddenWord);
+                Output.PrintResult(result, hiddenWord);
             } while (result == Result.CONTAIN || result == Result.INALLINPUT);
             return result;
         }

@@ -10,7 +10,7 @@ public class Input {
         System.out.println("\u001b[3;5mДа или Нет: \u001b[0m");
         while (true) {
             String word = InputConsole();
-            if (ValidateLetters(word)) return ValidateMenuOption(word);
+            if (ValidateMenuOption(word)) return TakeMenuOption(word);
             else {
                 System.out.println(MenuOption.ERROR.getTitle());
             }
@@ -33,10 +33,15 @@ public class Input {
         return (word.matches("[а-я]+"));
     }
 
-    private static MenuOption ValidateMenuOption(String word) {
+    private static MenuOption TakeMenuOption(String word) {
         if (word.equals(MenuOption.PLAY.getTitle().toLowerCase())) return MenuOption.PLAY;
         else if (word.equals(MenuOption.EXIT.getTitle().toLowerCase())) return MenuOption.EXIT;
         else return MenuOption.ERROR;
+    }
+
+    private static boolean ValidateMenuOption(String word) {
+        return (word.equals(MenuOption.PLAY.getTitle().toLowerCase())
+                || word.equals(MenuOption.EXIT.getTitle().toLowerCase()));
     }
 
     private static boolean ValidateLength(String word) {

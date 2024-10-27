@@ -1,4 +1,4 @@
-public class Hangman {
+public class Main {
     public static void main(String[] args) {
         GameDictionary dictionary = new GameDictionary();
         Menu menu = new Menu();
