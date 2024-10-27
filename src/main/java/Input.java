@@ -6,11 +6,11 @@ public class Input {
         return in.nextLine().toLowerCase();
     }
 
-    public static MenuOption InputOption() {
-        System.out.println("Хочешь сыграть в игру?\nДа или Нет: ");
+    public static MenuOption InputMenuOption() {
+        System.out.println("\u001b[3;5mДа или Нет: \u001b[0m");
         while (true) {
             String word = InputConsole();
-            if (ValidateLetters(word)) return ValidateTF(word);
+            if (ValidateLetters(word)) return ValidateMenuOption(word);
             else {
                 System.out.println(MenuOption.ERROR.getTitle());
             }
@@ -18,13 +18,13 @@ public class Input {
     }
 
 
-    public static String InputWord(String randomWord) {
-        System.out.println("Введите букву или слово целиком.\n");
+    public static String InputWord() {
+        System.out.println("\u001b[3;5mВведите букву на русском языке.\n\u001b[0m");
         while (true) {
             String word = InputConsole();
-            if (ValidateLetters(word) && ValidLength(word, randomWord.length())) return word;
+            if (ValidateLetters(word) && ValidateLength(word)) return word;
             else {
-                System.out.println("Введите букву или слово целиком!!");
+                System.out.println("\u001b[1;3;5mВведите букву на русском языке!!\u001b[0m");
             }
         }
     }
@@ -33,19 +33,21 @@ public class Input {
         return (word.matches("[а-я]+"));
     }
 
-    private static MenuOption ValidateTF(String word) {
+    private static MenuOption ValidateMenuOption(String word) {
         if (word.equals(MenuOption.PLAY.getTitle().toLowerCase())) return MenuOption.PLAY;
         else if (word.equals(MenuOption.EXIT.getTitle().toLowerCase())) return MenuOption.EXIT;
         else return MenuOption.ERROR;
     }
 
-    private static boolean ValidLength(String word, int wordLength) {
-        return (word.length() == 1 || word.length() == wordLength);
+    private static boolean ValidateLength(String word) {
+        return (word.length() == 1);
     }
 
-    public static String ConcatInput(String allInput, String inputWord) {
-        StringBuilder allInputWords = new StringBuilder(allInput);
-        allInputWords.append(" " + inputWord);
-        return allInputWords.toString();
+    public static String SavingInput(String allInput, String inputWord) {
+        if (allInput != null) {
+            StringBuilder allInputWords = new StringBuilder(allInput);
+            if (!allInput.contains(inputWord)) allInputWords.append(inputWord);
+            return allInputWords.toString();
+        } else return inputWord;
     }
 }

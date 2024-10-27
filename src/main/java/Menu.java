@@ -1,17 +1,7 @@
 
 public class Menu {
-    public static void StartMenu() {
-        GameDictionary newDict = new GameDictionary();
-        while (true) {
-            MenuOption response = Input.InputOption();
-            switch (response) {
-                case PLAY:
-                    Game newGame = new Game(newDict.getRndWord(), Picture.values().length);
-                    newGame.Play();
-                    break;
-                case EXIT:
-                    System.exit(0);
-            }
-        }
+    public MenuOption StartMenu() {
+        System.out.println("\u001b[36;1mХочешь сыграть со мной в игру? :P\nЯ загадываю тебе слово, а ты его не отгадываешь!\n\u001b[0m");
+        return Input.InputMenuOption();
     }
 }

@@ -1,7 +1,8 @@
 public enum Result {
     WIN ("Ты победил!"),
     MISTAKE("Не угадал!"),
-    CONTAIN ("Есть такая буква!");
+    CONTAIN ("Есть такая буква!"),
+    INALLINPUT ("Вы вводили такую букву раньше!");
 
     private final String title;
 
