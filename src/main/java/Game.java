@@ -4,26 +4,33 @@ public class Game {
         this.roundCount = roundCount;
     }
 
-    private String randomWord;
+    private final String randomWord;
+    private final int roundCount;
     private String allInputWord;
-    private int roundCount;
+    private Result gameResult;
 
+    public Result getGameResult() {
+        return gameResult;
+    }
 
-    public void Play() {
-        String hiddenWord = HidingWord();
-        Output.PrintStartGame(hiddenWord, randomWord);
+    public void playGame() {
+        String hiddenWord = hidingWord();
+        Output.printStartGame(hiddenWord, randomWord);
         for(int i = 0; i < roundCount; i++) {
             Round round = new Round(randomWord, hiddenWord, i);
-            if(round.PlayRound() == Result.WIN) break;
+            if(round.playRound() == Result.WIN) {
+                gameResult = Result.WIN;
+                break;
+            }
             else if (i == roundCount-1) {
-                Output.PrintLoseGame(randomWord);
+                Output.printLoseGame(randomWord);
             } else {
                 hiddenWord = round.getHiddenWord();
             }
         }
     }
 
-    private String HidingWord() {
+    private String hidingWord() {
         StringBuilder hiddenWord = new StringBuilder(randomWord);
         for(int i = 0; i<randomWord.length(); i++) {
             hiddenWord.replace(i,i+1,"*");
@@ -43,30 +50,31 @@ public class Game {
             return hiddenWord;
         }
 
-        private String randomWord;
+        private final String randomWord;
+        private final int roundNumber;
         private String hiddenWord;
         private String inputWord;
-        private int roundNumber;
 
-        public Result PlayRound () {
+
+        public Result playRound() {
             Result result;
             do {
-                inputWord = Input.InputWord();
-                result = CheckContainsLetter();
-                allInputWord = Input.SavingInput(allInputWord, inputWord);
+                inputWord = Input.inputWord();
+                result = checkContainsLetter();
+                allInputWord = Input.savingInput(allInputWord, inputWord);
                 if (result == Result.CONTAIN) {
-                    hiddenWord = OpeningLetters();
+                    hiddenWord = openingLetters();
                     if (hiddenWord.equals(randomWord)) result = Result.WIN;
                 } else if (result == Result.MISTAKE) {
-                    Output.PrintResult(result, hiddenWord, roundNumber);
+                    Output.printResult(result, hiddenWord, roundNumber);
                     return result;
                 }
-                Output.PrintResult(result, hiddenWord);
+                Output.printResult(result, hiddenWord);
             } while (result == Result.CONTAIN || result == Result.INALLINPUT);
             return result;
         }
 
-        private String OpeningLetters () {
+        private String openingLetters() {
             StringBuilder openWord = new StringBuilder(hiddenWord);
             for (int i = 0; i < randomWord.length(); i++) {
                 if (inputWord.charAt(0) == randomWord.charAt(i)) {
@@ -76,7 +84,7 @@ public class Game {
             return openWord.toString();
         }
 
-        private Result CheckContainsLetter() {
+        private Result checkContainsLetter() {
             if (randomWord.equals(inputWord)) return Result.WIN;
             else if (allInputWord != null && allInputWord.contains(inputWord)) return Result.INALLINPUT;
             else if (randomWord.contains(inputWord)) return Result.CONTAIN;

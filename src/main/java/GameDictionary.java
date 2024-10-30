@@ -7,16 +7,16 @@ import java.util.Random;
 
 public class GameDictionary {
     public String getRndWord() {
-        return TakeRndWord(TakeADictionary());
+        return takeRndWord(takeADictionary());
     }
 
-    private String DictPath() {
+    private String getDictPath() {
         return Paths.get("dictionary.txt").toAbsolutePath().toString();
     }
 
-    private ArrayList<String> TakeADictionary() {
+    private ArrayList<String> takeADictionary() {
         ArrayList<String> wordsDict = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(DictPath())))
+        try(BufferedReader br = new BufferedReader(new FileReader(getDictPath())))
         {
             String word;
             while ((word = br.readLine())!=null){
@@ -29,7 +29,7 @@ public class GameDictionary {
         return wordsDict;
     }
 
-    private String TakeRndWord(ArrayList<String> Dictionary) {
+    private String takeRndWord(ArrayList<String> Dictionary) {
         Random random = new Random();
         int randomNumber = random.nextInt(Dictionary.size());
         return Dictionary.get(randomNumber);
