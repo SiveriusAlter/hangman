@@ -20,8 +20,9 @@ public class Menu {
     }
 
     public MenuOption startMenu() {
-        System.out.println("\u001b[36;1mХочешь сыграть со мной в игру? :P\nЯ загадываю тебе слово, а ты его не отгадываешь!\n\u001b[0m");
-        System.out.printf("Сейчас у вас \u001b[32m %d побед\u001b[0m и \u001b[31m %d  поражений!\u001b[0m\n",
+        System.out.printf(Color.BLU.getCode() + "Хочешь сыграть со мной в игру? :P\nЯ загадываю тебе слово, а ты его не отгадываешь\nи замечательно висиш на этой красивой висилице!!\n%s" + Color.DROP.getCode(),
+                Picture.PIC1.getValue());
+        System.out.printf("Сейчас вы\n" + Color.GREEN.getCode() + "спаслись: %d раз\n" + Color.RED.getCode() + "повешаны: %d раз!\n" + Color.DROP.getCode(),
                 countWin, countLose);
         return Input.inputMenuOption();
 

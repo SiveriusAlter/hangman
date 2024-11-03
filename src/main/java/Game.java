@@ -7,40 +7,31 @@ public class Game {
     private final Word word;
     private final int roundCount;
     private LettersStorage letters = new LettersStorage();
-    private Result gameResult;
+    private Result result;
 
-    public Result getGameResult() {
-        return gameResult;
+    public Result getResult() {
+        return result;
     }
 
     public void playGame() {
         Output.printStartGame(word);
-        for(int i = 0; i < roundCount; i++) {
-            Result result = playRound(i);
+        for(int i = 1; i < roundCount; i++) {
+            playRound(i);
             if(result == Result.WIN) {
-                gameResult = Result.WIN;
                 break;
             }
-            else if(i == roundCount-1) {
-                Output.printLoseGame(word);
-            }
         }
+        Output.printLoseGame(word);
     }
 
 
-    private Result playRound(int roundNumber) {
-        Result result;
+    private void playRound(int roundNumber) {
         do {
-            String enteredLetter = Input.inputWord();
+            String enteredLetter = Input.inputRussianLetter();
             word.openLetters(enteredLetter);
             result = checkRoundResult(enteredLetter);
-            if (result == Result.MISTAKE) {
-                Output.printResult(result, word.getHiddenWord(), roundNumber);
-                return result;
-            }
-            Output.printResult(result, word.getHiddenWord());
+            Output.printResult(result, word.getHiddenWord(), roundNumber);
         } while (checkRepeatRound(result));
-        return result;
     }
 
     private Result checkRoundResult (String enteredLetter) {

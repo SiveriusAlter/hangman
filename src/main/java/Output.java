@@ -1,26 +1,41 @@
+import java.util.List;
+
 public class Output {
-    public static void printResult(Result result, String randomWord) {
-        System.out.printf("\u001b[32mРезультат: %s Рандомное слово: %s \n\u001b[0m",
-                result.getTitle(),
-                randomWord.toUpperCase());
-    }
+    private static String RESULTTEXT = "Результат: %s Рандомное слово: %s \n%s\n";
+    private static String STARTGAME = "Мы загадали слово, но вы увидите звезды!\nВот они: %s\n Длина слова: %d\n";
+    private static String LOSEGAME = "Поздравляю! Вы проиграли!\nСлово было: %s\n\n";
+
 
     public static void printResult(Result result, String randomWord, int i) {
         Picture[] pictures = Picture.values();
-        System.out.printf("\u001b[31mРезультат: %s Рандомное слово: %s \n%s\n\u001b[0m",
+        if (result != Result.MISTAKE) i--;
+        Color color = chooseColor(result);
+        String output = String.format(RESULTTEXT,
                 result.getTitle(),
                 randomWord.toUpperCase(),
                 pictures[i].getValue());
+        printWithColor(color, output);
     }
 
     public static void printStartGame(Word word) {
-        System.out.printf("\u001b[35mМы загадали слово, но вы увидите звезды!\nВот они: %s\n Длина слова: %d\n\u001b[0m",
+        String text = String.format(STARTGAME,
                 word.getHiddenWord(),
                 word.getRandomWord().length());
+        printWithColor(Color.START, text);
     }
 
     public static void printLoseGame(Word word) {
-        System.out.printf("\u001b[01;31mПоздравляю! Вы проиграли!\nСлово было: %s\n\n\u001b[0m",
+        String text = String.format(LOSEGAME,
                 word.getRandomWord().toUpperCase());
+        printWithColor(Color.LOSE, text);
+    }
+
+    public static void printWithColor(Color color, String text) {
+        System.out.println(color.getCode() + text + Color.DROP.getCode());
+    }
+
+    private static Color chooseColor (Result result) {
+        if (result == Result.MISTAKE) return Color.RED;
+        return Color.GREEN;
     }
 }

@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class Input {
 
@@ -8,25 +9,28 @@ public class Input {
     }
 
     public static MenuOption inputMenuOption() {
-        System.out.println("\u001b[3;5mДа или Нет: \u001b[0m");
-        while (true) {
-            String word = inputConsole();
-            if (validateMenuOption(word)) return takeMenuOption(word);
-            else {
-                System.out.println(MenuOption.ERROR.getTitle());
-            }
-        }
+        String output = MenuOption.PLAY.getTitle() + " или " + MenuOption.EXIT.getTitle() + ": ";
+        String input = inputDialog(output, MenuOption.ERROR.getTitle(),
+                s -> validateMenuOption(s));
+        return takeMenuOption(input);
     }
 
 
-    public static String inputWord() {
-        System.out.println("\u001b[3;5mВведите букву на русском языке.\n\u001b[0m");
+    public static String inputRussianLetter() {
+        String output = ("Введите букву на русском языке.\n");
+        String input = inputDialog(output, "Вы ввели что-то другое! Букву на русском языке!",
+                s -> validateLetters(s) && validateLength(s));
+        return input;
+    }
+
+    private static String inputDialog(String title, String failMessage, Predicate<String> validator) {
+        Output.printWithColor(Color.ITALICS, title);
         while (true) {
             String word = inputConsole();
-            if (validateLetters(word) && validateLength(word)) return word;
-            else {
-                System.out.println("\u001b[1;3;5mВведите букву на русском языке!!\u001b[0m");
+            if (validator.test(word)) {
+                return word;
             }
+            Output.printWithColor(Color.ITALICS, failMessage);
         }
     }
 
@@ -37,7 +41,7 @@ public class Input {
     private static MenuOption takeMenuOption(String word) {
         if (word.equals(MenuOption.PLAY.getTitle().toLowerCase())) return MenuOption.PLAY;
         else if (word.equals(MenuOption.EXIT.getTitle().toLowerCase())) return MenuOption.EXIT;
-        else return MenuOption.ERROR;
+        return MenuOption.ERROR;
     }
 
     private static boolean validateMenuOption(String word) {

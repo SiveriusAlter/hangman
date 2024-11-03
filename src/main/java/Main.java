@@ -8,7 +8,7 @@ public class Main {
             Word word = new Word(dictionary.getDictionary());
             Game newGame = new Game(word, roundCount);
             newGame.playGame();
-            if (newGame.getGameResult() == Result.WIN) menu.setCountWin(menu.getCountWin()+1);
+            if (newGame.getResult() == Result.WIN) menu.setCountWin(menu.getCountWin()+1);
             else menu.setCountLose(menu.getCountLose()+1);
         }
     }
