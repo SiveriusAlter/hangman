@@ -15,7 +15,7 @@ public class Game {
 
     public void playGame() {
         Output.printStartGame(word);
-        for(int i = 1; i < roundCount; i++) {
+        for(int i = 0; i < roundCount; i++) {
             playRound(i);
             if(result == Result.WIN) {
                 break;

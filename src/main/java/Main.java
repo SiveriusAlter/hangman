@@ -3,7 +3,7 @@ public class Main {
         GameResources resources = new GameResources();
         GameDictionary dictionary = new GameDictionary(resources.getPath());
         Menu menu = new Menu();
-        int roundCount = Picture.values().length;
+        int roundCount = Picture.values().length-1;
         while (menu.startMenu() != MenuOption.EXIT) {
             Word word = new Word(dictionary.getDictionary());
             Game newGame = new Game(word, roundCount);

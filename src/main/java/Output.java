@@ -8,7 +8,7 @@ public class Output {
 
     public static void printResult(Result result, String randomWord, int i) {
         Picture[] pictures = Picture.values();
-        if (result != Result.MISTAKE) i--;
+        if (result == Result.MISTAKE) i++;
         Color color = chooseColor(result);
         String output = String.format(RESULTTEXT,
                 result.getTitle(),
