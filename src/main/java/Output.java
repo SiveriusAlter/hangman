@@ -10,17 +10,17 @@ public class Output {
         System.out.printf("\u001b[31mРезультат: %s Рандомное слово: %s \n%s\n\u001b[0m",
                 result.getTitle(),
                 randomWord.toUpperCase(),
-                pictures[i].getTitle());
+                pictures[i].getValue());
     }
 
-    public static void printStartGame(String hiddenWord, String randomWord) {
+    public static void printStartGame(Word word) {
         System.out.printf("\u001b[35mМы загадали слово, но вы увидите звезды!\nВот они: %s\n Длина слова: %d\n\u001b[0m",
-                hiddenWord,
-                randomWord.length());
+                word.getHiddenWord(),
+                word.getRandomWord().length());
     }
 
-    public static void printLoseGame(String randomWord) {
+    public static void printLoseGame(Word word) {
         System.out.printf("\u001b[01;31mПоздравляю! Вы проиграли!\nСлово было: %s\n\n\u001b[0m",
-                randomWord.toUpperCase());
+                word.getRandomWord().toUpperCase());
     }
 }

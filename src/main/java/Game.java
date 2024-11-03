@@ -1,12 +1,12 @@
 public class Game {
-    public Game(String randomWord, int roundCount) {
-        this.randomWord = randomWord;
+    public Game(Word word, int roundCount) {
+        this.word = word;
         this.roundCount = roundCount;
     }
 
-    private final String randomWord;
+    private final Word word;
     private final int roundCount;
-    private String allInputWord;
+    private LettersStorage letters = new LettersStorage();
     private Result gameResult;
 
     public Result getGameResult() {
@@ -14,81 +14,51 @@ public class Game {
     }
 
     public void playGame() {
-        String hiddenWord = hidingWord();
-        Output.printStartGame(hiddenWord, randomWord);
+        Output.printStartGame(word);
         for(int i = 0; i < roundCount; i++) {
-            Round round = new Round(randomWord, hiddenWord, i);
-            if(round.playRound() == Result.WIN) {
+            Result result = playRound(i);
+            if(result == Result.WIN) {
                 gameResult = Result.WIN;
                 break;
             }
-            else if (i == roundCount-1) {
-                Output.printLoseGame(randomWord);
-            } else {
-                hiddenWord = round.getHiddenWord();
+            else if(i == roundCount-1) {
+                Output.printLoseGame(word);
             }
         }
     }
 
-    private String hidingWord() {
-        StringBuilder hiddenWord = new StringBuilder(randomWord);
-        for(int i = 0; i<randomWord.length(); i++) {
-            hiddenWord.replace(i,i+1,"*");
-        }
-        return hiddenWord.toString();
+
+    private Result playRound(int roundNumber) {
+        Result result;
+        do {
+            String enteredLetter = Input.inputWord();
+            word.openLetters(enteredLetter);
+            result = checkRoundResult(enteredLetter);
+            if (result == Result.MISTAKE) {
+                Output.printResult(result, word.getHiddenWord(), roundNumber);
+                return result;
+            }
+            Output.printResult(result, word.getHiddenWord());
+        } while (checkRepeatRound(result));
+        return result;
     }
 
-    public class Round {
-        public Round(String randomWord, String hiddenWord, int roundNumber){
-            this.randomWord = randomWord;
-            this.hiddenWord = hiddenWord;
-            this.roundNumber = roundNumber;
+    private Result checkRoundResult (String enteredLetter) {
+        if (word.checkOpening()) return Result.WIN;
+        else if(letters.checkContainAndSaveLetters(enteredLetter)) {
+            return Result.INSTORAGE;
         }
-
-
-        public String getHiddenWord () {
-            return hiddenWord;
+        else if (word.checkContainsLetter(enteredLetter)) {
+            return Result.CONTAIN;
         }
+        else return Result.MISTAKE;
+    }
 
-        private final String randomWord;
-        private final int roundNumber;
-        private String hiddenWord;
-        private String inputWord;
-
-
-        public Result playRound() {
-            Result result;
-            do {
-                inputWord = Input.inputWord();
-                result = checkContainsLetter();
-                allInputWord = Input.savingInput(allInputWord, inputWord);
-                if (result == Result.CONTAIN) {
-                    hiddenWord = openingLetters();
-                    if (hiddenWord.equals(randomWord)) result = Result.WIN;
-                } else if (result == Result.MISTAKE) {
-                    Output.printResult(result, hiddenWord, roundNumber);
-                    return result;
-                }
-                Output.printResult(result, hiddenWord);
-            } while (result == Result.CONTAIN || result == Result.INALLINPUT);
-            return result;
-        }
-
-        private String openingLetters() {
-            StringBuilder openWord = new StringBuilder(hiddenWord);
-            for (int i = 0; i < randomWord.length(); i++) {
-                if (inputWord.charAt(0) == randomWord.charAt(i)) {
-                    openWord.replace(i, i + 1, inputWord);
-                }
-            }
-            return openWord.toString();
-        }
-
-        private Result checkContainsLetter() {
-            if (randomWord.equals(inputWord)) return Result.WIN;
-            else if (allInputWord != null && allInputWord.contains(inputWord)) return Result.INALLINPUT;
-            else if (randomWord.contains(inputWord)) return Result.CONTAIN;
-            else return Result.MISTAKE;
+    private boolean checkRepeatRound(Result result) {
+        if (result == Result.CONTAIN || result == Result.INSTORAGE) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

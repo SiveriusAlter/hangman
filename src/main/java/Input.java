@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Input {
+
     private static String inputConsole(){
         Scanner in = new Scanner(System.in);
         return in.nextLine().toLowerCase();
@@ -48,11 +49,4 @@ public class Input {
         return (word.length() == 1);
     }
 
-    public static String savingInput(String allInput, String inputWord) {
-        if (allInput != null) {
-            StringBuilder allInputWords = new StringBuilder(allInput);
-            if (!allInput.contains(inputWord)) allInputWords.append(inputWord);
-            return allInputWords.toString();
-        } else return inputWord;
-    }
 }

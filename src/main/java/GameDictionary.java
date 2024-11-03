@@ -1,37 +1,32 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
 public class GameDictionary {
-    public String getRndWord() {
-        return takeRndWord(takeADictionary());
+    public GameDictionary(String path) {
+        this.path = path;
+        setDictionary();
     }
 
-    private String getDictPath() {
-        return Paths.get("dictionary.txt").toAbsolutePath().toString();
+    private String path;
+    private List<String> dictionary = new ArrayList<>();
+
+    public List<String> getDictionary() {
+        return dictionary;
     }
 
-    private ArrayList<String> takeADictionary() {
-        ArrayList<String> wordsDict = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(getDictPath())))
+    private void setDictionary() {
+        try(BufferedReader br = new BufferedReader(new FileReader(path)))
         {
             String word;
             while ((word = br.readLine())!=null){
-                wordsDict.add(word);
+                dictionary.add(word);
             }
         }
         catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return wordsDict;
-    }
-
-    private String takeRndWord(ArrayList<String> Dictionary) {
-        Random random = new Random();
-        int randomNumber = random.nextInt(Dictionary.size());
-        return Dictionary.get(randomNumber);
     }
 }

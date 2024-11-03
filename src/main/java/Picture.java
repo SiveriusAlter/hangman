@@ -6,14 +6,14 @@ public enum Picture {
     PIC5 ("\u001b[30;47m_________\n||      |\n||      |\n||      O\n||\n||\n||\n||___________\n||_________||\n\u001b[0m"),
     PIC6 ("\u001b[30;47m_________\n||      |\n||      |\n||      O\n||     /|\\\n||     / \\\n||\n||___________\n||_________||\n\u001b[0m");
 
-    private final String title;
+    private final String value;
 
-    Picture(String title) {
-        this.title = title;
+    Picture(String value) {
+        this.value = value;
     }
 
-    public String getTitle() {
-        return title;
+    public String getValue() {
+        return value;
     }
 
 }
