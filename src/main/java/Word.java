@@ -29,31 +29,27 @@ public class Word {
 
     private void hideWord() {
         StringBuilder stringBuilder = new StringBuilder(randomWord);
-        for(int i = 0; i<randomWord.length(); i++) {
-            stringBuilder.replace(i,i+1,"*");
+        for (int i = 0; i < randomWord.length(); i++) {
+            stringBuilder.replace(i, i + 1, "*");
         }
         hiddenWord = stringBuilder.toString();
     }
 
     public void openLetters(String enteredLetter) {
-            StringBuilder stringBuilder = new StringBuilder(hiddenWord);
-            for (int i = 0; i < randomWord.length(); i++) {
-                if (enteredLetter.charAt(0) == randomWord.charAt(i)) {
-                    stringBuilder.replace(i, i + 1, enteredLetter);
-                }
+        StringBuilder stringBuilder = new StringBuilder(hiddenWord);
+        for (int i = 0; i < randomWord.length(); i++) {
+            if (enteredLetter.charAt(0) == randomWord.charAt(i)) {
+                stringBuilder.replace(i, i + 1, enteredLetter);
             }
-            hiddenWord = stringBuilder.toString();
+        }
+        hiddenWord = stringBuilder.toString();
     }
 
     public boolean checkContainsLetter(String enteredLetter) {
-        if (randomWord.contains(enteredLetter)) return true;
-        else {
-            return false;
-        }
+        return (randomWord.contains(enteredLetter));
     }
 
     public boolean checkOpening() {
-        if (hiddenWord.equals(randomWord)) return true;
-        else return false;
+        return (hiddenWord.equals(randomWord));
     }
 }

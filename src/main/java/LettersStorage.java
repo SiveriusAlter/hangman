@@ -9,7 +9,6 @@ public class LettersStorage {
         if (letters == null) {
             letters = inputLetter;
         } else {
-
             StringBuilder stringBuilder = new StringBuilder(letters);
             if (!letters.contains(inputLetter)) stringBuilder.append(inputLetter);
             letters = stringBuilder.toString();
@@ -19,11 +18,9 @@ public class LettersStorage {
     public boolean checkContainAndSaveLetters(String inputLetter) {
         if (letters != null && letters.contains(inputLetter)) {
             return true;
-        }
-        else {
+        } else {
             saveLetters(inputLetter);
             return false;
         }
     }
-
 }

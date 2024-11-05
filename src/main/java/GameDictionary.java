@@ -18,14 +18,12 @@ public class GameDictionary {
     }
 
     private void setDictionary() {
-        try(BufferedReader br = new BufferedReader(new FileReader(path)))
-        {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String word;
-            while ((word = br.readLine())!=null){
+            while ((word = br.readLine()) != null) {
                 dictionary.add(word);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }

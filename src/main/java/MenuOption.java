@@ -1,7 +1,7 @@
 public enum MenuOption {
-    PLAY ("Да"),
-    EXIT ("Нет"),
-    ERROR ("Введи да или нет!");
+    PLAY("Да"),
+    EXIT("Нет"),
+    ERROR("Введи да или нет!");
 
     private final String title;
 

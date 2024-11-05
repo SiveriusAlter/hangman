@@ -1,4 +1,4 @@
-import java.util.List;
+
 
 public class Output {
     private static String RESULTTEXT = "Результат: %s Рандомное слово: %s \n%s\n";
@@ -10,23 +10,17 @@ public class Output {
         Picture[] pictures = Picture.values();
         if (result == Result.MISTAKE) i++;
         Color color = chooseColor(result);
-        String output = String.format(RESULTTEXT,
-                result.getTitle(),
-                randomWord.toUpperCase(),
-                pictures[i].getValue());
+        String output = String.format(RESULTTEXT, result.getTitle(), randomWord.toUpperCase(), pictures[i].getValue());
         printWithColor(color, output);
     }
 
     public static void printStartGame(Word word) {
-        String text = String.format(STARTGAME,
-                word.getHiddenWord(),
-                word.getRandomWord().length());
+        String text = String.format(STARTGAME, word.getHiddenWord(), word.getRandomWord().length());
         printWithColor(Color.START, text);
     }
 
     public static void printLoseGame(Word word) {
-        String text = String.format(LOSEGAME,
-                word.getRandomWord().toUpperCase());
+        String text = String.format(LOSEGAME, word.getRandomWord().toUpperCase());
         printWithColor(Color.LOSE, text);
     }
 
@@ -34,7 +28,7 @@ public class Output {
         System.out.println(color.getCode() + text + Color.DROP.getCode());
     }
 
-    private static Color chooseColor (Result result) {
+    private static Color chooseColor(Result result) {
         if (result == Result.MISTAKE) return Color.RED;
         return Color.GREEN;
     }
